@@ -1,0 +1,71 @@
+name: Release ZTM Cli
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - '*'
+env:
+  PKG_NAME: ztm
+  S3_PATH: repo/ztm
+
+defaults:
+  run:
+    shell: bash
+    working-directory: ztm
+
+jobs:
+  set-release-version:
+    name: set-release-version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: pipy
+
+      - name: Set RELEASE_VERSION
+        id: version
+        run: |
+          pwd
+          ls -l
+          CI_COMMIT_DATE=$(date +%Y%m%d%H%M)
+          echo "CI_COMMIT_DATE=${CI_COMMIT_DATE}" >> $GITHUB_ENV
+          git fetch --tags
+          RELEASE_VERSION=`git name-rev --tags --name-only $(git rev-parse HEAD)`
+          if [ $RELEASE_VERSION = 'undefined' ]
+          then
+              echo "release_version=nightly-${CI_COMMIT_DATE}" >> $GITHUB_OUTPUT
+              echo "version=nightly" >> $GITHUB_OUTPUT
+              echo "commit_date=${CI_COMMIT_DATE}" >> $GITHUB_OUTPUT
+          else
+              echo "release_version=${RELEASE_VERSION}" >> $GITHUB_OUTPUT
+              echo "commit_date=${CI_COMMIT_DATE}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Show envs
+        run: export
+    outputs:
+      release_version: ${{steps.version.outputs.release_version}}
+      commit_date: ${{steps.version.outputs.commit_date}}
+
+  build-ztm-cli-linux:
+    needs: set-rlease-version
+    name: build-ztm-cli
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ztm
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build
+        id: build
+        env:
+          RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+        run: |
+          set -x
+          ./build.sh
+          ls -al

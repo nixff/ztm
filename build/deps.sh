@@ -45,3 +45,7 @@ VERSION_JSON="{
 
 echo "$VERSION_JSON" > cli/version.json
 echo "$VERSION_JSON" > agent/version.json
+
+echo "VERSION=\"$VERSION\"" > version.env
+echo "COMMIT=\"$COMMIT\"" >> version.env
+echo "COMMIT_DATE=\"$COMMIT_DATE\"" >> version.env

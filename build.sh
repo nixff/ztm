@@ -6,7 +6,7 @@ ZTM_BIN="$ZTM_DIR/bin/ztm"
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export OS_NAME=generic_linux
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  export OS_NAME=darwin
+  export OS_NAME=macos
 fi
 
 export OS_ARCH=$(uname -m)

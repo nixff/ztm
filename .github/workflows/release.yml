@@ -50,184 +50,125 @@ jobs:
       commit_date: ${{steps.version.outputs.commit_date}}
       commit_sha: ${{steps.version.outputs.commit_sha}}
 
-  # build-ztm-cli-linux-x86_64:
-  #   needs: set-release-version
-  #   name: build-ztm-cli-x86_64
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v4
+  build-ztm-cli-linux-x86_64:
+    needs: set-release-version
+    name: build-ztm-cli
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-  #     - name: Build
-  #       id: build
-  #       env:
-  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-  #       run: |
-  #         mkdir bin
-  #         touch bin/ztm
-  #         tar zcvf ztm-cli-${ZTM_VERSION}-generic_linux-x86_64.tar.gz bin/ztm
-
-  #     - name: Upload artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-x86_64.tar.gz
-  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-x86_64.tar.gz
-      
-
-  # build-ztm-cli-linux-arm64:
-  #   needs: set-release-version
-  #   name: build-ztm-cli-arm64
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-
-  #     - name: Build
-  #       id: build
-  #       env:
-  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-  #       run: |
-  #         mkdir bin
-  #         touch bin/ztm
-  #         tar zcvf ztm-cli-${ZTM_VERSION}-generic_linux-arm64.tar.gz bin/ztm
-
-  #     - name: Upload artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
-  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
-
-  # build-ztm-cli-linux-x86_64:
-  #   needs: set-release-version
-  #   name: build-ztm-cli
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-
-  #     - name: Build
-  #       id: build
-  #       env:
-  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-  #       run: |
-  #         set -x
-  #         ./build.sh
-  #         ls -al
-  #
-  #     - name: Upload artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-x86_64.tar.gz
-  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-x86_64.tar.gz
-
-
-
-  # build-ztm-cli-linux-arm64:
-  #   needs: set-release-version
-  #   name: build-ztm-cli
-  #   runs-on: ubuntu-20.04
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-
-  #     - name: Build
-  #       id: build
-  #       env:
-  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-  #       run: |
-  #         set -x
-  #         ./build.sh
-  #         ls -al
-  #
-  #     - name: Upload artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
-  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
-
-  # build-ztm-cli-darwin-x64:
-  #   needs: set-release-version
-  #   name: build-ztm-cli-darwin-x64
-  #   runs-on: macos-13
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
-
-  #     - name: Build
-  #       id: build
-  #       env:
-  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-  #       run: |
-  #         set -x
-  #         ./build.sh
-  #         ls -al
-  #         uname -m
+      - name: Build
+        id: build
+        env:
+          RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+          ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+          ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+          ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+        run: |
+          set -x
+          ./build.sh
+          ls -al
   
-  #     - name: Upload artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
-  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-x86_64.tar.gz
+          path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-x86_64.tar.gz
 
-  # build-ztm-cli-darwin-arm64:
-  #   needs: set-release-version
-  #   name: build-ztm-cli-darwin-arm64
-  #   runs-on: macos-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
 
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
 
-  #     - name: Build
-  #       id: build
-  #       env:
-  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-  #       run: |
-  #         set -x
-  #         ./build.sh
-  #         ls -al
-  #         uname -m
+  build-ztm-cli-linux-arm64:
+    needs: set-release-version
+    name: build-ztm-cli
+    runs-on: [self-hosted, linux, ARM64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Build
+        id: build
+        env:
+          RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+          ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+          ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+          ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+        run: |
+          set -x
+          ./build.sh
+          ls -al
   
-  #     - name: Upload artifacts
-  #       uses: actions/upload-artifact@v4
-  #       with:
-  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-arm64.tar.gz
-  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-arm64.tar.gz
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
+          path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
+
+  uild-ztm-cli-macos-x64:
+   needs: set-release-version
+   name: build-ztm-cli-macos-x64
+   runs-on: macos-13
+   steps:
+     - uses: actions/checkout@v4
+
+     - uses: actions/setup-node@v4
+       with:
+         node-version: 20
+
+     - name: Build
+       id: build
+       env:
+         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+       run: |
+         set -x
+         ./build.sh
+         ls -al
+         uname -m
+  
+     - name: Upload artifacts
+       uses: actions/upload-artifact@v4
+       with:
+         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-macos-x86_64.tar.gz
+         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-macos-x86_64.tar.gz
+
+  uild-ztm-cli-macos-arm64:
+   needs: set-release-version
+   name: build-ztm-cli-macos-arm64
+   runs-on: macos-latest
+   steps:
+     - uses: actions/checkout@v4
+
+     - uses: actions/setup-node@v4
+       with:
+         node-version: 20
+
+     - name: Build
+       id: build
+       env:
+         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+       run: |
+         set -x
+         ./build.sh
+         ls -al
+         uname -m
+  
+     - name: Upload artifacts
+       uses: actions/upload-artifact@v4
+       with:
+         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-macos-arm64.tar.gz
+         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-macos-arm64.tar.gz
 
   build-ztm-cli-win-x64:
     needs: set-release-version
@@ -266,37 +207,44 @@ jobs:
         run: |
           .\build.cmd
           dir
+          dir
   
-      # - name: Upload artifacts
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
-      #     path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
-  #create-release:
-  #  name: create release
-  #  runs-on: ubuntu-20.04
-  #  needs:
-  #    - set-release-version
-  #    - build-ztm-cli-linux-x86_64
-  #    - build-ztm-cli-linux-arm64
-  #  env:
-  #    ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
-  #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #  steps:
-  #    - name: Download artifacts
-  #      uses: actions/download-artifact@v4
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-win-x86_64.tar.gz
+          path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-win-x86_64.tar.gz
 
-  #    - name: Check downloads
-  #      run: |
-  #        ls -alR
+  create-release:
+    name: create release
+    runs-on: ubuntu-20.04
+    needs:
+      - set-release-version
+      - build-ztm-cli-linux-x86_64
+      - build-ztm-cli-linux-arm64
+      - build-ztm-cli-macos-x86_64
+      - build-ztm-cli-macos-arm64
+      - build-ztm-cli-win-64
+    env:
+      ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
 
-  #    - name: Create draft release
-  #      id: create_release
-  #      #uses: ncipollo/release-action@v1
-  #      uses: softprops/action-gh-release@v2
-  #      with:
-  #        draft: true
-  #        tag: ${{needs.set-release-version.outputs.release_version}}
-  #        files: |
-  #          ztm-cli-${{env.ZTM_VERSION}}-generic_linux-x86_64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-generic_linux-x86_64.tar.gz
-  #          ztm-cli-${{env.ZTM_VERSION}}-generic_linux-arm64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-generic_linux-arm64.tar.gz
+      - name: Check downloads
+        run: |
+          ls -alR
+
+      - name: Create draft release
+        id: create_release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          tag: ${{needs.set-release-version.outputs.release_version}}
+          files: |
+            ztm-cli-${{env.ZTM_VERSION}}-generic_linux-x86_64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-generic_linux-x86_64.tar.gz
+            ztm-cli-${{env.ZTM_VERSION}}-generic_linux-arm64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-generic_linux-arm64.tar.gz
+            ztm-cli-${{env.ZTM_VERSION}}-macos-x86_64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-macos-x86_64.tar.gz
+            ztm-cli-${{env.ZTM_VERSION}}-macos-arm64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-macos-arm64.tar.gz
+            ztm-cli-${{env.ZTM_VERSION}}-win-x64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-win-x64.tar.gz

@@ -12,16 +12,13 @@ env:
 defaults:
   run:
     shell: bash
-    working-directory: ztm
 
 jobs:
   set-release-version:
     name: set-release-version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-        with:
-          path: pipy
+      - uses: actions/checkout@v4
 
       - name: Set RELEASE_VERSION
         id: version
@@ -54,8 +51,6 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: ztm
 
       - uses: actions/setup-node@v4
         with:

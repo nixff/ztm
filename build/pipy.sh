@@ -92,6 +92,8 @@ fi
 
 if [ -n "$PACKAGE_OUTPUT" ]
 then
+  cd $ZTM_DIR
+
   if [ ! -f version.env ]
   then
     echo "Missing version info, skip package..."

@@ -17,7 +17,7 @@ CMD /c "npm install --no-audit"
 
 CD "%cur_dir%"
 
-if defined %ZTM_VERSION% (
+if defined ZTM_VERSION (
 set VERSION=%ZTM_VERSION%
 ) else (
 FOR /f %%i IN ('git describe --abbrev^=0 --tags') DO SET VERSION=%%i

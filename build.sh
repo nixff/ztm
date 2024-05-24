@@ -27,5 +27,8 @@ then
   exit 0
 fi
 
+cat version.env
 source version.env
+export | grep -i version
+echo "VERSION=$VERSION"
 tar zcvf ztm-cli-${VERSION}.tar.gz bin/ztm

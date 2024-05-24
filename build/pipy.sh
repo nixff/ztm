@@ -4,6 +4,7 @@ ZTM_DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
 
 mkdir -p "$ZTM_DIR/pipy/build"
 cd "$ZTM_DIR/pipy/build"
+rm -f CMakeCache.txt
 
 cmake .. \
   -DCMAKE_BUILD_TYPE=Release \

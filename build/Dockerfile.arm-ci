@@ -1,0 +1,18 @@
+FROM ubuntu:20.04
+
+ENV TZ=Asia/Shanghai
+
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && \
+    apt install -y cmake clang make git curl
+
+COPY . /tmp/ztm/
+
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt install -y nodejs && \
+    node -v && \
+    ls -al /tmp/ztm && \
+    cd /tmp/ztm && \
+    ./build.sh && \
+    ls -al

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 ZTM_DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
 
@@ -8,6 +8,12 @@ check_version() {
     exit 1
   fi
 }
+
+if ! command -v node &> /dev/null
+then
+  echo "Can't find node command, exit..."
+  exit 1
+fi
 
 check_version `node -v` 'v16' 'Require Node.js version 16 or above'
 

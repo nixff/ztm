@@ -52,25 +52,57 @@ jobs:
       commit_date: ${{steps.version.outputs.commit_date}}
       commit_sha: ${{steps.version.outputs.commit_sha}}
 
-  build-ztm-cli-linux:
+  # build-ztm-cli-linux-x86_64:
+  #   needs: set-release-version
+  #   name: build-ztm-cli
+  #   runs-on: ubuntu-20.04
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+
+  #     - name: Build
+  #       id: build
+  #       env:
+  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+  #       run: |
+  #         set -x
+  #         ./build.sh
+  #         ls -al
+
+  build-ztm-cli-linux-arm64:
     needs: set-release-version
     name: build-ztm-cli
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
+      - uses: actions/setup-qemu-action@v3
+      - uses: docker/setup-buildx-action@v3
 
       - name: Build
-        id: build
         env:
           RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
           ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
           ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
           ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
         run: |
-          set -x
-          ./build.sh
-          ls -al
+          docker buildx build \
+            --platform=linux/arm64 \
+            --output type=docker \
+            -t build-ztm:latest \
+            -f build/Dockerfile.arm-ci \
+            --build-arg RELEASE_VERSION=$RELEASE_VERSION \
+            --build-arg ZTM_VERSION=$ZTM_VERSION \
+            --build-arg ZTM_COMMIT_SHA=$ZTM_COMMIT_SHA \
+            --build-arg ZTM_COMMIT_DATE="$ZTM_COMMIT_DATE" \
+            .
+
+          docker images
+
+          docker create --name=builder build-ztm:latest 

@@ -53,7 +53,6 @@ then
     source version.env
     tar zcvf ztm-cli-${VERSION}-${OS_NAME}-${OS_ARCH}.tar.gz bin/ztm
   else
-    tar zcvf libztm-${VERSION}.tar.gz usr/local/lib/*.so
-     
+    tar zcvf libztm-${VERSION}-android.tar.gz usr/local/lib/*.so
   fi
 fi

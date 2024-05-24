@@ -211,9 +211,9 @@ jobs:
   #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-win-x86_64.zip
   #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-win-x86_64.zip
 
-  build-libztm:
+  build-libztm-android:
     needs: set-release-version
-    name: build-libztm
+    name: build-libztm-android
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@v4
@@ -249,8 +249,8 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: libztm-${{needs.set-release-version.outputs.release_version}}.tar.gz
-          path: libztm-${{needs.set-release-version.outputs.release_version}}.tar.gz
+          name: libztm-${{needs.set-release-version.outputs.release_version}}-android.tar.gz
+          path: libztm-${{needs.set-release-version.outputs.release_version}}-android.tar.gz
 
   create-release:
     name: create release
@@ -286,4 +286,4 @@ jobs:
             ztm-cli-${{env.ZTM_VERSION}}-macos-x86_64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-macos-x86_64.tar.gz
             ztm-cli-${{env.ZTM_VERSION}}-macos-arm64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-macos-arm64.tar.gz
             ztm-cli-${{env.ZTM_VERSION}}-win-x64.tar.gz/ztm-cli-${{env.ZTM_VERSION}}-win-x64.zip
-            lib-ztm-${{env.ZTM_VERSION}}.tar.gz/libztm-${{env.ZTM_VERSION}}.tar.gz
+            lib-ztm-${{env.ZTM_VERSION}}.tar.gz/libztm-${{env.ZTM_VERSION}}-android.tar.gz

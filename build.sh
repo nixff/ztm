@@ -3,6 +3,14 @@
 ZTM_DIR=$(cd "$(dirname "$0")" && pwd)
 ZTM_BIN="$ZTM_DIR/bin/ztm"
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  export OS_NAME=generic_linux
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export OS_NAME=darwin
+fi
+
+export OS_ARCH=$(uname -m)
+
 cd "$ZTM_DIR"
 build/deps.sh
 
@@ -32,4 +40,4 @@ source version.env
 export | grep -i version
 echo "VERSION=$VERSION"
 bin/ztm version
-tar zcvf ztm-cli-${VERSION}.tar.gz bin/ztm
+tar zcvf ztm-cli-${VERSION}-${OS_NAME}-${OS_ARCH}.tar.gz bin/ztm

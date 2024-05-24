@@ -19,7 +19,7 @@ then
     -DPIPY_CUSTOM_CODEBASES=ztm/ca:../ca,ztm/hub:../hub,ztm/agent:../agent,ztm/cli:../cli \
     -DPIPY_DEFAULT_OPTIONS="repo://ztm/cli --args"
 
-  make -j
+  make -j2
 
   mkdir -p "$ZTM_DIR/bin"
   rm -f "$ZTM_BIN"
@@ -49,7 +49,7 @@ else
   PATH=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
   ../config android-arm64 -D__ANDROID_API__=${ANDROID_TARGET_API} -fPIC -static no-asm no-shared no-tests --prefix=${OUTPUT}
 
-  make -j
+  make
   make install_sw
 
 #### Build libztm.so

@@ -252,7 +252,7 @@ jobs:
     runs-on: ubuntu-20.04
     needs:
       - set-release-version
-      # - build-ztm-cli-linux-x86_64
+      - build-ztm-cli-linux-x86_64
       # - build-ztm-cli-linux-arm64
       # - build-ztm-cli-macos-x64
       # - build-ztm-cli-macos-arm64

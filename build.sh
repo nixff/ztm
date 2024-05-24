@@ -39,7 +39,7 @@ fi
 
 if [ -n "$PACKAGE_OUTPUT" ]
 then
-  if [ -z "$BUILD_PIPY_SHARED" ]
+  if [ -z "$BUILD_ZTM_SHARED" ]
   then
     # Package
     if [ ! -f version.env ]

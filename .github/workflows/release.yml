@@ -227,6 +227,11 @@ jobs:
         with:
           ndk-version: r26c
 
+      - uses: seanmiddleditch/gha-setup-ninja@v4
+        id: setup-ninja
+        with:
+          version: 1.11.1
+
       - name: Build
         id: build
         env:

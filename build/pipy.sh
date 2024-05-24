@@ -46,7 +46,7 @@ else
   make install_sw
 
 #### Build libztm.so
-  cd $PIPY_DIR
+  cd $PIPY_DIR/build
 
   cmake .. \
     -DCMAKE_TOOLCHAIN_FILE=${NDK}/build/cmake/android.toolchain.cmake \

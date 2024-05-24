@@ -234,7 +234,7 @@ jobs:
           ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
           ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
           ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
-          BUILD_PIPY_SHARED: true
+          BUILD_ZTM_SHARED: true
           NDK: "${{ steps.setup-ndk.outputs.ndk-path }}"
         run: |
           set -x

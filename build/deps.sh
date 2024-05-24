@@ -27,10 +27,10 @@ npm install --no-audit
 
 cd "$ZTM_DIR"
 
-if [ -n "$CI_COMMIT_SHA" ]; then
-  VERSION="$CI_COMMIT_TAG"
-  COMMIT="$CI_COMMIT_SHA"
-  COMMIT_DATE="$CI_COMMIT_DATE"
+if [ -n "$ZTM_VERSION" ]; then
+  VERSION="$ZTM_VERSION"
+  COMMIT="$ZTM_COMMIT_SHA"
+  COMMIT_DATE="$ZTM_COMMIT_DATE"
 else
   VERSION=`git describe --abbrev=0 --tags`
   COMMIT=`git log -1 --format=%H`

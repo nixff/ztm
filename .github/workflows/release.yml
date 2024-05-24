@@ -4,7 +4,8 @@ on:
   workflow_dispatch:
   push:
     tags:
-      - '*'
+      - 'v*.*.*'
+      - '*.*.*'
 env:
   PKG_NAME: ztm
   S3_PATH: repo/ztm
@@ -64,9 +65,9 @@ jobs:
         id: build
         env:
           RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
-          CI_COMMIT_TAG: ${{needs.set-release-version.outputs.release_version}}
-          CI_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
-          CI_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+          ZTM_COMMIT_VERSION: ${{needs.set-release-version.outputs.release_version}}
+          ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+          ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
         run: |
           set -x
           ./build.sh

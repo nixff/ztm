@@ -222,9 +222,9 @@ jobs:
       - set-release-version
       - build-ztm-cli-linux-x86_64
       - build-ztm-cli-linux-arm64
-      - build-ztm-cli-macos-x86_64
+      - build-ztm-cli-macos-x64
       - build-ztm-cli-macos-arm64
-      - build-ztm-cli-win-64
+      - build-ztm-cli-win-x64
     env:
       ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

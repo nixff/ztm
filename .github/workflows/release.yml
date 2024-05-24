@@ -119,6 +119,7 @@ jobs:
       - build-ztm-cli-linux-arm64
     env:
       ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Create draft release
         id: create_release

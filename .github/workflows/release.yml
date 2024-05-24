@@ -232,7 +232,7 @@ jobs:
   build-ztm-cli-win-x64:
     needs: set-release-version
     name: build-ztm-cli-win-x64
-    runs-on: macos-13
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
 

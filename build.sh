@@ -39,18 +39,19 @@ fi
 
 if [ -n "$PACKAGE_OUTPUT" ]
 then
+  # Package
+  if [ ! -f version.env ]
+  then
+    echo "Missing version info, skip package..."
+    exit 0
+  fi
+
+  bin/ztm version
+
+  source version.env
+
   if [ -z "$BUILD_ZTM_SHARED" ]
   then
-    # Package
-    if [ ! -f version.env ]
-    then
-      echo "Missing version info, skip package..."
-      exit 0
-    fi
-
-    bin/ztm version
-
-    source version.env
     tar zcvf ztm-cli-${VERSION}-${OS_NAME}-${OS_ARCH}.tar.gz bin/ztm
   else
     tar zcvf libztm-${VERSION}-android.tar.gz usr/local/lib/*.so

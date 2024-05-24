@@ -117,9 +117,11 @@ jobs:
       - set-release-version
       - build-ztm-cli-linux-x86_64
       - build-ztm-cli-linux-arm64
+    env:
+      ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
     steps:
       - name: Create draft release
-        id: create-release
+        id: create_release
         uses: ncipollo/release-action@v1
         with:
           allowUpdates: true
@@ -133,6 +135,22 @@ jobs:
       - name: Check downloads
         run: |
           ls -al
+
+      - name: Upload ztm-cli linux x86_64
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ztm-cli-${{env.ZTM_VERSION}}-generic_linux-x86_64.tar.gz
+          asset_name: ztm-cli-${{env.ZTM_VERSION}}-generic_linux-x86_64.tar.gz
+          asset_content_type: application/gzip
+
+      - name: Upload ztm-cli linux arm64
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ztm-cli-${{env.ZTM_VERSION}}-generic_linux-arm64.tar.gz
+          asset_name: ztm-cli-${{env.ZTM_VERSION}}-generic_linux-arm64.tar.gz
+          asset_content_type: application/gzip
 
   # build-ztm-cli-linux-x86_64:
   #   needs: set-release-version

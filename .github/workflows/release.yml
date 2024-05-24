@@ -261,8 +261,6 @@ jobs:
           ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
           ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
         run: |
-          dir
-          cd ztm
           .\build.cmd
           dir
   

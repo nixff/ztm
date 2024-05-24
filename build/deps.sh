@@ -29,13 +29,12 @@ cd "$ZTM_DIR"
 
 if [ -n "$ZTM_VERSION" ]; then
   VERSION="$ZTM_VERSION"
-  COMMIT="$ZTM_COMMIT_SHA"
-  COMMIT_DATE="$ZTM_COMMIT_DATE"
 else
   VERSION=`git describe --abbrev=0 --tags`
-  COMMIT=`git log -1 --format=%H`
-  COMMIT_DATE=`git log -1 --format=%cD`
 fi
+
+COMMIT=`git log -1 --format=%H`
+COMMIT_DATE=`git log -1 --format=%cD`
 
 VERSION_JSON="{
   \"version\": \"$VERSION\",

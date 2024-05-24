@@ -18,7 +18,13 @@ then
     -DPIPY_CUSTOM_CODEBASES=ztm/ca:../ca,ztm/hub:../hub,ztm/agent:../agent,ztm/cli:../cli \
     -DPIPY_DEFAULT_OPTIONS="repo://ztm/cli --args"
 
-  make -j2
+  make
+
+  mkdir -p "$ZTM_DIR/bin"
+  rm -f "$ZTM_BIN"
+  cp -f "$ZTM_DIR/pipy/bin/pipy" "$ZTM_BIN"
+
+  echo "The final product is ready at $ZTM_BIN"
 else
   export PIPY_DIR=${ZTM_DIR}/pipy
   if [ -z "$NDK"  ] || [ ! -f "$NDK/build/cmake/android.toolchain.cmake" ]
@@ -42,7 +48,7 @@ else
   PATH=$ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH
   ../config android-arm64 -D__ANDROID_API__=${ANDROID_TARGET_API} -fPIC -static no-asm no-shared no-tests --prefix=${OUTPUT}
 
-  make -j
+  make
   make install_sw
 
 #### Build libztm.so
@@ -80,4 +86,26 @@ else
   mkdir -p usr/local/lib
   cp $ANDROID_NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/sysroot/usr/lib/aarch64-linux-android/libc++_shared.so $ZTM_DIR/usr/local/lib
   cp $PIPY_DIR/build/libpipy.so $ZTM_DIR/usr/local/lib/libztm.so
+
+  echo "The libztm.so is ready at $ZTM_DIR/usr/local/lib/libztm.so"
+fi
+
+if [ -n "$PACKAGE_OUTPUT" ]
+then
+  if [ ! -f version.env ]
+  then
+    echo "Missing version info, skip package..."
+    exit 0
+  fi
+
+  bin/ztm version
+
+  source version.env
+
+  if [ -z "$BUILD_ZTM_SHARED" ]
+  then
+    tar zcvf ztm-cli-${VERSION}-${OS_NAME}-${OS_ARCH}.tar.gz bin/ztm
+  else
+    tar zcvf libztm-${VERSION}-android.tar.gz usr/local/lib/*.so
+  fi
 fi

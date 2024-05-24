@@ -25,7 +25,6 @@ if [ $? -ne 0 ]; then
 fi
 
 cd "$ZTM_DIR/pipy"
-rm -f build/deps/codebases.tar.gz.h
 npm install --no-audit
 
 cd "$ZTM_DIR/gui"

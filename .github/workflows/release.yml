@@ -169,10 +169,40 @@ jobs:
   #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
   #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-generic_linux-arm64.tar.gz
 
-  build-ztm-cli-darwin-x64:
+  # build-ztm-cli-darwin-x64:
+  #   needs: set-release-version
+  #   name: build-ztm-cli-darwin-x64
+  #   runs-on: macos-13
+  #   steps:
+  #     - uses: actions/checkout@v4
+
+  #     - uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+
+  #     - name: Build
+  #       id: build
+  #       env:
+  #         RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+  #         ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+  #         ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+  #         ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+  #       run: |
+  #         set -x
+  #         ./build.sh
+  #         ls -al
+  #         uname -m
+  
+  #     - name: Upload artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
+  #         path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
+
+  build-ztm-cli-darwin-arm64:
     needs: set-release-version
-    name: build-ztm-cli-darwin-x64
-    runs-on: macos-13
+    name: build-ztm-cli-darwin-arm64
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v4
 
@@ -196,9 +226,50 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
-          path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
+          name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-arm64.tar.gz
+          path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-arm64.tar.gz
 
+  build-ztm-cli-win-x64:
+    needs: set-release-version
+    name: build-ztm-cli-win-x64
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v2
+        with:
+          msbuild-architecture: x64
+
+      - uses: lukka/get-cmake@latest
+        with:
+          cmakeVersion: "~3.25.0"
+          ninjaVersion: "^1.11.1"
+
+      - name: Install NASM
+        uses: ilammy/setup-nasm@v1
+
+      - name: Build
+        id: build
+        env:
+          RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+          ZTM_VERSION: ${{needs.set-release-version.outputs.release_version}}
+          ZTM_COMMIT_SHA: ${{needs.set-release-version.outputs.commit_sha}}
+          ZTM_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
+        run: |
+          cd ztm
+          .\build.cmd
+          dir
+  
+      # - name: Upload artifacts
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
+      #     path: ztm-cli-${{needs.set-release-version.outputs.release_version}}-darwin-x86_64.tar.gz
   #create-release:
   #  name: create release
   #  runs-on: ubuntu-20.04

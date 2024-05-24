@@ -1,7 +1,6 @@
 #!/bin/bash
 
 ZTM_DIR=$(cd "$(dirname "$0")" && pwd)
-ZTM_BIN="$ZTM_DIR/bin/ztm"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export OS_NAME=generic_linux
@@ -19,6 +18,7 @@ cd "$ZTM_DIR"
 build/deps.sh
 
 if [ $? -ne 0 ]; then
+  echo "Prepare deps failed, exit..."
   exit 1
 fi
 

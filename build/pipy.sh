@@ -1,6 +1,7 @@
 #!/bin/bash
 
 ZTM_DIR=$(cd "$(dirname "$0")" && cd .. && pwd)
+ZTM_BIN="$ZTM_DIR/bin/ztm"
 
 rm -rf $ZTM_DIR/pipy/build
 

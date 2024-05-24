@@ -10,5 +10,7 @@ COPY pipy\bin\Release\pipy.exe bin\ztm.exe
 
 ECHO The final product is ready at bin\ztm.exe
 
+if defined PACKAGE_OUTPUT (
 tar.exe -a -c -f ztm-cli-%ZTM_VERSION%-win-x86_64.zip bin\ztm.exe
 dir
+)

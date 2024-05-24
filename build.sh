@@ -31,4 +31,5 @@ cat version.env
 source version.env
 export | grep -i version
 echo "VERSION=$VERSION"
+bin/ztm version
 tar zcvf ztm-cli-${VERSION}.tar.gz bin/ztm

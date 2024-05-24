@@ -25,7 +25,7 @@ jobs:
         run: |
           pwd
           ls -l
-          CI_COMMIT_DATE=$(date +%Y%m%d%H%M)
+          CI_COMMIT_DATE=$(git log -1 --format=%cD)
           echo "CI_COMMIT_DATE=${CI_COMMIT_DATE}" >> $GITHUB_ENV
           git fetch --tags
           RELEASE_VERSION=`git name-rev --tags --name-only $(git rev-parse HEAD)`
@@ -39,11 +39,15 @@ jobs:
               echo "commit_date=${CI_COMMIT_DATE}" >> $GITHUB_OUTPUT
           fi
 
+          CI_COMMIT_SHA=$(git log -1 --format=%H)
+          echo "commit_sha=$CI_COMMIT_SHA"  >> $GITHUB_OUTPUT
+
       - name: Show envs
         run: export
     outputs:
       release_version: ${{steps.version.outputs.release_version}}
       commit_date: ${{steps.version.outputs.commit_date}}
+      commit_sha: ${{steps.version.outputs.commit_sha}}
 
   build-ztm-cli-linux:
     needs: set-release-version
@@ -60,6 +64,9 @@ jobs:
         id: build
         env:
           RELEASE_VERSION: ${{ needs.set-release-version.outputs.release_version }}
+          CI_COMMIT_TAG: ${{needs.set-release-version.outputs.release_version}}
+          CI_COMMIT_SHA: ${{needs.set-release-version.outputs.release_sha}}
+          CI_COMMIT_DATE: ${{needs.set-release-version.outputs.commit_date}}
         run: |
           set -x
           ./build.sh

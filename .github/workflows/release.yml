@@ -49,7 +49,7 @@ jobs:
       commit_date: ${{steps.version.outputs.commit_date}}
 
   build-ztm-cli-linux:
-    needs: set-rlease-version
+    needs: set-release-version
     name: build-ztm-cli
     runs-on: ubuntu-20.04
     steps:

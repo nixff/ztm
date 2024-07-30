@@ -3,8 +3,7 @@ name: Release ZTM docker image
 on:
   workflow_dispatch:
   release:
-    types:
-      - published
+    types: [published]
 env:
   PACKAGE_OUTPUT: true
 

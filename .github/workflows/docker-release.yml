@@ -33,7 +33,7 @@ jobs:
       - name: Set version
         id: get_version
         run: |
-          VERSION=$(sed 's#^refs/tags/\(.*\)#\1#' <<< '${{ github.ref }}')
+          VERSION=$(sed 's#^refs/tags/v\(.*\)#\1#' <<< '${{ github.ref }}')
           echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Build Hub
